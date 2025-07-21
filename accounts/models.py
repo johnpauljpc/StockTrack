@@ -46,6 +46,10 @@ class CustomUser(AbstractBaseUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name"]
 
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}" if self.last_name else self.first_name
