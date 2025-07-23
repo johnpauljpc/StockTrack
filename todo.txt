@@ -1,1 +1,2 @@
 polish the email messages sent (embedding html)
+Add related_words to the relationships
