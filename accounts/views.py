@@ -13,6 +13,7 @@ class CustomRegistrationView(CreateView):
     model = CustomUser
     form_class = CustomUserCreationForm
     template_name = "accounts/registration.html"
+    success_url = reverse_lazy("login")
 
 class CustomLoginView(LoginView):
     template_name = "accounts/login.html"
