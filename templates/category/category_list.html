@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if categories %}
+<marquee behavior="" direction=""><h2>List of Categories</h2></marquee>
+<table class="table table-hover">
+   <thead>
+    <tr>
+     <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Action</th>
+    </tr>
+   </thead>
+
+   <tbody>
+    {% for cat in categories %}
+    <tr>
+      <th scope="row">{{cat.id}}</th>
+      <td>{{cat.name}}</td>
+      <td> {% if cat.description %} {{cat.description}} {% else %} No description {% endif %}</td> 
+      <td class="actions">
+        <a class="btn btn-sm btn-primary" href="{% url 'category_update' cat.id %}">Edit</a>
+        <a class="btn btn-sm btn-danger" href="{% url 'category_delete' cat.id %}">Delete</a>
+      </td>
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+    </table>
+ 
+
+
+{% else %}
+<div class="isempty">
+    <h2>Its empty!</h2>
+    No any category available
+</div>
+{% endif %}
+
+{% endblock content %}
