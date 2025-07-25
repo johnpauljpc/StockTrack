@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 from dateutil.relativedelta import relativedelta
+import json
 
 
 # Create your models here.
@@ -24,11 +25,21 @@ class Product(models.Model):
         self.total_price = self.unit_price * self.available_quantity
         return super().save(*args, **kwargs)
 
+    @property
+    def availability(self):
+        if self.available_quantity:
+            return "Yes, Available"
+        return "No, Not Available"
+    
+    @property 
+    def total_amount_of_all_products(self):
+        products = Product.objects.all()
+        total_amount = sum([product.total_price for product in products if product.total_price > 0 ])
+        return total_amount
+
 
     def __str__(self):
         return self.name
-
-
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=100)

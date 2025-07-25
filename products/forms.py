@@ -10,3 +10,20 @@ class CategoryForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class':'form-control', 'placeholder':'e.g. drinks'}),
            'description': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Just a short description.'})
         }
+
+class ProductForm(forms.ModelForm):
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(),
+        empty_label="Select Category",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    class Meta:
+        model = Product
+        fields = ['name','available_quantity','unit_price', 'category']
+
+        widgets = {
+            'name':forms.TextInput(attrs={'class':'form-control'}),
+            'available_quantity':forms.NumberInput(attrs={'class':'form-control'}),
+            'unit_price':forms.NumberInput(attrs={'class':'form-control'}),
+            
+        }
