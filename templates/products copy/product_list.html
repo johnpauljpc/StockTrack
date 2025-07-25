@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if products %}
+<marquee behavior="" direction=""><h2>Products Page</h2></marquee>
+<div class="product-wrapper overflow-x-auto">
+    <table class="table table-hover ">
+   <thead>
+    <tr>
+     <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col" class="text-nowrap">Available Qty</th>
+      <th scope="col" class="text-nowrap">Unit Price($)</th>
+      <th scope="col" class="text-nowrap">Total Price($)</th>
+      <th scope="col" class="text-nowrap">Date Created</th>
+      <th scope="col" >Actions</th>
+    </tr>
+   </thead>
+
+   <tbody>
+    {% for product in products %}
+    <tr>
+      <th scope="row">{{product.id}}</th>
+      <td class="text-nowrap">{{product.name}}</td>
+      <td class="text-nowrap">{{product.category}}</td> 
+      <td class="text-nowrap">{{product.available_quantity}}</td> 
+      <td class="text-nowrap">{{product.unit_price}}</td>
+      <td class="text-nowrap">{{product.total_price}}</td> 
+      <td class="text-nowrap">{{product.date_created|date:"D, d M Y"}}</td>  
+      <td class="actions text-nowrap">
+        <a class="btn btn-sm btn-info text-white" href="{% url 'product_detail' product.id %}">View</a>
+        <a class="btn btn-sm btn-primary" href="{% url 'product_update' product.id %}">Edit</a>
+        <a class="btn btn-sm btn-danger" href="{% url 'product_delete' product.id %}">Delete</a>
+      </td>
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+    </table>
+
+    
+</div>
+<div class="success">Total Amount for all available Products: {{total_amount_of_all_products}}</div>
+ 
+
+
+{% else %}
+<div class="isempty">
+    <h2>Its empty!</h2>
+    No any category available
+</div>
+{% endif %}
+
+{% endblock content %}
