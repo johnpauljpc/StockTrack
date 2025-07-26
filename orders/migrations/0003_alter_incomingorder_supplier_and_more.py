@@ -9,15 +9,15 @@ class Migration(migrations.Migration):
     dependencies = [
         ('customers', '0001_initial'),
         ('orders', '0002_alter_outgoingorder_discount'),
-        ('suppliers', '0001_initial'),
+        # ('suppliers', '0001_initial'),
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='incomingorder',
-            name='supplier',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='suppliers.supplier'),
-        ),
+        # migrations.AlterField(
+        #     model_name='incomingorder',
+        #     name='supplier',
+        #     field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='suppliers.supplier'),
+        # ),
         migrations.AlterField(
             model_name='outgoingorder',
             name='customer',

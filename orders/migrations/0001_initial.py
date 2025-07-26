@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('total_price', models.DecimalField(decimal_places=2, editable=False, max_digits=20)),
                 ('supply_date', models.DateTimeField(auto_now_add=True)),
                 ('product', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='products.product')),
-                ('supplier', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='products.supplier')),
+                # ('supplier', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='products.supplier')),
             ],
         ),
         migrations.CreateModel(
