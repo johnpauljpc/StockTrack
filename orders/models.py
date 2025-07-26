@@ -2,14 +2,14 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from products.models import Product
 from customers.models import Customer
-# from suppliers.models import Supplier
+from suppliers.models import Supplier
 
 # Create your models here.
 
 
 class IncomingOrder(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE) #add related words
-    # supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     quantity_supply = models.PositiveIntegerField()
     total_price = models.DecimalField(max_digits=20, decimal_places=2, editable=False)
     supply_date = models.DateTimeField(auto_now_add=True)
