@@ -1,2 +1,3 @@
 polish the email messages sent (embedding html)
 Add related_words to the relationships
+what if theirs change in price? how do you handle it ?

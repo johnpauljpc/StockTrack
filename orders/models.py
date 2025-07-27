@@ -15,11 +15,12 @@ class IncomingOrder(models.Model):
     supply_date = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
+        self.product.available_quantity = self.quantity_supply 
         self.total_price = self.product.unit_price * self.quantity_supply
         return super().save(*args, **kwargs)
     
-    # def __str__(self):
-    #     return f"{self.product} - {self.supplier}"
+    def __str__(self):
+        return f"{self.product} - {self.supplier}"
     
 
 class OutgoingOrder(models.Model):

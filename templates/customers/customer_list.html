@@ -2,8 +2,8 @@
 
 {% block content %}
 
-{% if suppliers %}
-<marquee behavior="" direction=""><h2>Products Page</h2></marquee>
+{% if customers %}
+<marquee behavior="" direction=""><h2>Customers Page</h2></marquee>
 <div class="product-wrapper overflow-x-auto">
     <table class="table table-hover ">
    <thead>
@@ -21,19 +21,19 @@
    </thead>
 
    <tbody>
-    {% for supplier in suppliers %}
+    {% for customer in customers %}
     <tr>
-      <th scope="row">{{supplier.id}}</th>
-      <td class="text-nowrap">{{supplier.first_name}}</td>
-      <td class="text-nowrap">{{supplier.last_name}}</td> 
-      <td class="text-nowrap">{{supplier.age}}</td> 
-      <td class="text-nowrap">{{supplier.email}}</td>
-      <td class="text-nowrap">{{supplier.phone_number}}</td>
-      <td class="text-nowrap">{{supplier.address}}</td> 
-      <td class="text-nowrap">{{supplier.date_created|date:"D, d M Y"}}</td>  
+      <th scope="row">{{customer.id}}</th>
+      <td class="text-nowrap">{{customer.first_name}}</td>
+      <td class="text-nowrap">{{customer.last_name}}</td> 
+      <td class="text-nowrap">{{customer.age}}</td> 
+      <td class="text-nowrap">{{customer.email}}</td>
+      <td class="text-nowrap">{{customer.phone_number}}</td>
+      <td class="text-nowrap">{{customer.address}}</td> 
+      <td class="text-nowrap">{{customer.date_created|date:"D, d M Y"}}</td>  
       <td class="actions text-nowrap">
-        <a class="btn btn-sm btn-primary" href="{% url 'update_supplier' supplier.id %}">Edit</a>
-        <a class="btn btn-sm btn-danger" href="{% url 'delete_supplier' supplier.id %}">Delete</a>
+        <a class="btn btn-sm btn-primary" href="{% url 'update_customer' customer.id %}">Edit</a>
+        <a class="btn btn-sm btn-danger" href="{% url 'delete_customer' customer.id %}">Delete</a>
       </td>
     </tr>
 
@@ -44,14 +44,14 @@
 
     
 </div>
-<div class="success">Total Number of Suppliers: {{suppliers|length}}</div>
+<div class="success">Total Number of Customers: {{customers|length}}</div>
  
 
 
 {% else %}
 <div class="isempty">
-    <h2>Its empty!</h2>
-    No any category available
+    <h2>Oops!</h2>
+    No any customer here!
 </div>
 {% endif %}
 

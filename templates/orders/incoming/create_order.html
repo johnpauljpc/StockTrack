@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Incoming Order Creation Form</h2>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" class="btn btn-primary px-3 mt-3">Submit</button>
+    <div class="other-links my-3">
+        <a onclick="window.history.back()" class="btn btn-secondary">Back</a>
+    </div>
+
+</form>
+
+{% endblock content %}

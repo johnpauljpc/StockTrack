@@ -12,7 +12,7 @@ from .forms import CustomerForm
 
 class CustomerListView(ListView):
     model = Customer
-    context_object_name = "Customers"
+    context_object_name = "customers"
     template_name = 'Customers/Customer_list.html'
 
    
@@ -20,7 +20,7 @@ class CustomerCreateView(SuccessMessageMixin, CreateView):
     model = Customer
     form_class = CustomerForm
     template_name = "Customers/create_Customer.html"
-    success_url = reverse_lazy("list_Customers")
+    success_url = reverse_lazy("list_customers")
     def get_success_message(self, cleaned_data):
         return f"New Customer - ({self.object.first_name}) created successfully."
     
@@ -30,21 +30,21 @@ class CustomerCreateView(SuccessMessageMixin, CreateView):
 class UpdateCustomerView(SuccessMessageMixin,UpdateView):
     model = Customer
     form_class = CustomerForm
-    template_name = "Customers/update_Customer.html"
-    success_url = reverse_lazy("list_Customers")
+    template_name = "customers/update_customer.html"
+    success_url = reverse_lazy("list_customers")
     success_messages = "Customer updated successfully!"
 
 class DeleteCustomerView(DeleteView):
     model = Customer
-    context_object_name = 'Customer'
-    template_name = "Customers/delete_Customer.html"
-    success_url = reverse_lazy("list_Customers")
+    context_object_name = 'customer'
+    template_name = "customers/delete_customer.html"
+    success_url = reverse_lazy("list_customers")
     # success_message = "deleted"
 
     def form_valid(self, form):
-        Customer = self.get_object()
+        customer = self.get_object()
         success_url = self.get_success_url()
         self.object.delete()
-        messages.success(self.request, f"Customer: {Customer.name} deleted!")
+        messages.success(self.request, f"Customer: {customer.first_name} deleted!")
         return redirect(success_url)
        
