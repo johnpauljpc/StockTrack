@@ -24,31 +24,27 @@ class SupplierCreateView(SuccessMessageMixin, CreateView):
     def get_success_message(self, cleaned_data):
         return f"New supplier - ({self.object.first_name}) created successfully."
     
-# class DetailProducView(DetailView):
-#     model = Product
-#     context_object_name = "product"
-#     template_name = 'products/product_detail.html'
 
     
 
-# class UpdateProductView(SuccessMessageMixin,UpdateView):
-#     model = Product
-#     form_class = ProductForm
-#     template_name = "products/update_product.html"
-#     success_url = reverse_lazy("product_list")
-#     success_messages = "Product updated successfully!"
+class UpdateSupplierView(SuccessMessageMixin,UpdateView):
+    model = Supplier
+    form_class = SupplierForm
+    template_name = "Suppliers/update_Supplier.html"
+    success_url = reverse_lazy("list_suppliers")
+    success_messages = "Supplier updated successfully!"
 
-# class DeleteProductView(DeleteView):
-#     model = Product
-#     context_object_name = 'product'
-#     template_name = "products/delete_product.html"
-#     success_url = reverse_lazy("product_list")
-#     # success_message = "deleted"
+class DeleteSupplierView(DeleteView):
+    model = Supplier
+    context_object_name = 'supplier'
+    template_name = "Suppliers/delete_Supplier.html"
+    success_url = reverse_lazy("list_suppliers")
+    # success_message = "deleted"
 
-#     def form_valid(self, form):
-#         cat = self.get_object()
-#         success_url = self.get_success_url()
-#         self.object.delete()
-#         messages.success(self.request, f"Cat: {cat.name} deleted!")
-#         return redirect(success_url)
+    def form_valid(self, form):
+        supplier = self.get_object()
+        success_url = self.get_success_url()
+        self.object.delete()
+        messages.success(self.request, f"Supplier: {supplier.name} deleted!")
+        return redirect(success_url)
        
