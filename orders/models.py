@@ -15,9 +15,34 @@ class IncomingOrder(models.Model):
     supply_date = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        self.product.available_quantity = self.quantity_supply 
-        self.total_price = self.product.unit_price * self.quantity_supply
-        return super().save(*args, **kwargs)
+        is_new = self._state.adding
+
+        if not is_new:
+            original = IncomingOrder.objects.get(pk=self.pk)
+            quantity_diff = self.quantity_supply - original.quantity_supply
+        else:
+            quantity_diff = self.quantity_supply
+
+        self.product.available_quantity += quantity_diff
+
+        if self.product.available_quantity < 0:
+            raise ValueError("Cannot reduce stock below zero.")
+
+        self.product.save()
+
+        self.total_price = self.quantity_supply * self.product.unit_price
+
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        self.product.available_quantity -= self.quantity_supply
+
+        if self.product.available_quantity < 0:
+            raise ValueError("Deleting this would cause negative stock.")
+
+        self.product.save()
+        super().delete(*args, **kwargs)
+        
     
     def __str__(self):
         return f"{self.product} - {self.supplier}"
