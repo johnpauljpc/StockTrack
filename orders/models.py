@@ -17,8 +17,19 @@ class IncomingOrder(models.Model):
     def save(self, *args, **kwargs):
         self.total_price = self.quantity_supply * self.product.unit_price
         current_product = Product.objects.get(pk = self.product.pk)
-        current_ordered_product_qs = IncomingOrder.objects.filter(product = current_product)
         super().save(*args, **kwargs) #saves incoming order
+        current_ordered_product_qs = IncomingOrder.objects.filter(product = current_product)
+        
+
+        # Get total quantity of a given product
+        total_availability = sum([product.quantity_supply for product in current_ordered_product_qs if product.quantity_supply > 0])
+        self.product.available_quantity = total_availability
+        self.product.save()
+
+    def delete(self, *args, **kwargs):
+        current_product = Product.objects.get(pk = self.product.pk)
+        super().delete(*args, **kwargs)
+        current_ordered_product_qs = IncomingOrder.objects.filter(product = current_product)
 
         # Get total quantity of a given product
         total_availability = sum([product.quantity_supply for product in current_ordered_product_qs if product.quantity_supply > 0])
