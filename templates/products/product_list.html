@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load amount_to_words %}
 {% block content %}
 
 {% if products %}
@@ -43,7 +43,8 @@
 
     
 </div>
-<div class="success">Total Amount for all available Products: {{total_amount_of_all_products}}</div>
+<div class="success">Total Amount for all available Products: {{total_amount_of_all_products}} <br>
+Amount in words: <em>{{total_amount_of_all_products|amount_to_words}}</em></div>
  
 
 
