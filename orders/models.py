@@ -15,6 +15,21 @@ class IncomingOrder(models.Model):
     supply_date = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
+        self.total_price = self.quantity_supply * self.product.unit_price
+        current_product = Product.objects.get(pk = self.product.pk)
+        current_ordered_product_qs = IncomingOrder.objects.filter(product = current_product)
+        super().save(*args, **kwargs) #saves incoming order
+
+        # Get total quantity of a given product
+        total_availability = sum([product.quantity_supply for product in current_ordered_product_qs if product.quantity_supply > 0])
+        self.product.available_quantity = total_availability
+        self.product.save()
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+
+    '''
+    def save(self, *args, **kwargs):
         is_new = self._state.adding
 
         if not is_new:
@@ -38,14 +53,16 @@ class IncomingOrder(models.Model):
         self.product.available_quantity -= self.quantity_supply
 
         if self.product.available_quantity < 0:
-            raise ValueError("Deleting this would cause negative stock.")
+            self.product.available_quantity = 0
+            # raise ValueError("Deleting this would cause negative stock.")
 
         self.product.save()
         super().delete(*args, **kwargs)
         
+    '''
     
     def __str__(self):
-        return f"{self.product} - {self.supplier}"
+        return f"{self.quantity_supply} {self.product} - {self.supplier}"
     
 
 class OutgoingOrder(models.Model):
