@@ -4,8 +4,8 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView,De
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 
-from .models import IncomingOrder
-from .forms import IncomingOrderForm
+from .models import IncomingOrder, OutgoingOrder
+from .forms import IncomingOrderForm, OutgoingOrderForm
 
 
 # Create your views here.
@@ -48,3 +48,42 @@ class IncomingOrderDeleteView(DeleteView):
         messages.success(self.request, f"order: {incoming_order} deleted!")
         return redirect(success_url)
        
+
+# VIEWS FOR OUTGOING ORDERS
+class OutgoingOrderListView(ListView):
+    model = OutgoingOrder
+    context_object_name = "outgoing_orders"
+    template_name = 'orders/outgoing/list_orders.html'
+
+   
+class OutgoingOrderCreateView(SuccessMessageMixin, CreateView):
+    model = OutgoingOrder
+    form_class = OutgoingOrderForm
+    template_name = "orders/outgoing/create_order.html"
+    success_url = reverse_lazy("list_outgoing_orders")
+    def get_success_message(self, cleaned_data):
+        return f"New Outgoing order - ({self.object}) made successfully."
+    
+
+    
+
+class OutgoingOrderUpdateView(SuccessMessageMixin,UpdateView):
+    model = OutgoingOrder
+    form_class = OutgoingOrderForm
+    template_name = "orders/outgoing/update_order.html"
+    success_url = reverse_lazy("list_outgoing_orders")
+    success_messages = "Outgoing order updated successfully!"
+
+class OutgoingOrderDeleteView(DeleteView):
+    model = OutgoingOrder
+    context_object_name = 'outgoing_order'
+    template_name = "orders/outgoing/delete_order.html"
+    success_url = reverse_lazy("list_outgoing_orders")
+    # success_message = "deleted"
+
+    def form_valid(self, form):
+        outgoing_order = self.get_object()
+        success_url = self.get_success_url()
+        self.object.delete()
+        messages.success(self.request, f"order: {outgoing_order} deleted!")
+        return redirect(success_url)

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if outgoing_orders %}
+<marquee behavior="" direction=""><h2>Outgoing Orders Page</h2></marquee>
+<div class="product-wrapper overflow-x-auto">
+    <table class="table table-hover ">
+   <thead>
+    <tr>
+     <th scope="col">Id</th>
+      <th scope="col">Product</th>
+      <th scope="col">Customer</th>
+      <th scope="col" class="text-nowrap">Quantity Supplied Out</th>
+      <th scope="col" class="text-nowrap">Total Price Before discount ($)</th>
+      <th scope="col" class="text-nowrap">Discount (%)</th>
+      <th scope="col" class="text-nowrap">Total Price After Discount($)</th>
+      <th scope="col" class="text-nowrap">Date created</th>
+      <th scope="col" >Actions</th>
+    </tr>
+   </thead>
+
+   <tbody>
+    {% for order in outgoing_orders %}
+    <tr>
+      <th scope="row">{{order.id}}</th>
+      <td class="text-nowrap">{{order.product}}</td>
+      <td class="text-nowrap">{{order.customer}}</td> 
+      <td class="text-nowrap">{{order.quantity_order}}</td> 
+      <td class="text-nowrap">{{order.total_price_before_discount}}</td>
+      <td class="text-nowrap">{{order.discount}}</td>
+      <td class="text-nowrap">{{order.total_price_after_discount}}</td>
+      <td class="text-nowrap">{{order.ordered_date|date:"D, d M Y"}}</td>  
+      <td class="actions text-nowrap">
+        <a class="btn btn-sm btn-primary" href="{% url 'update_outgoing_order' order.id %}">Edit</a>
+        <a class="btn btn-sm btn-danger" href="{% url 'delete_outgoing_order' order.id %}">Delete</a>
+      </td>
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+    </table>
+
+    
+</div>
+<div class="success">Total Number of Supplies (outgoing Orders): {{outgoing_orders|length}}</div>
+ 
+
+
+{% else %}
+<div class="isempty">
+    <h2>Oops!</h2>
+    No any outgoing order here!
+</div>
+{% endif %}
+
+{% endblock content %}

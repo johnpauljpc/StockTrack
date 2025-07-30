@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Delete Outgoing Order</h2>
+  <p>Are you sure you want to delete "<strong>{{ outgoing_order.product }}</strong> supplied by <strong>{{outgoing_order.supplier}}</strong>"?</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a onclick="window.history.back()" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock content %}
